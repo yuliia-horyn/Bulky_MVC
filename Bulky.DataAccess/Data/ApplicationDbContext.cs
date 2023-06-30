@@ -1,9 +1,8 @@
-﻿using BulkyWeb.Models;
+﻿using Bulky.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Net.NetworkInformation;
 
-namespace BulkyWeb.Data
-{
+namespace Bulky.DataAccess.Data
+{ 
     public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext>options): base(options)
