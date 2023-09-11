@@ -1,9 +1,11 @@
 ﻿using Bulky.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bulky.DataAccess.Data
 { 
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext>options): base(options)
         {
@@ -11,13 +13,36 @@ namespace Bulky.DataAccess.Data
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Category>().HasData(
                 new Category { CategoryId=1, Name="Action", DisplayOrder=1},
                 new Category { CategoryId=2, Name="SciFi", DisplayOrder=2},
                 new Category { CategoryId=3, Name="History", DisplayOrder=3}
                 );
+            modelBuilder.Entity<Company>().HasData(
+              new Company { Id = 1, Name = "Tech Solution", StreetAddress = "123 Tech St", City="Tech City", PostalCode="12121", State="IL", PhoneNumber="4447770000" },
+              new Company { Id = 2, 
+                  Name = "Vivid Books", 
+                  StreetAddress = "988 Vid St", 
+                  City = "Vid City", 
+                  PostalCode = "55555", 
+                  State = "IL", 
+                  PhoneNumber = "3337770000" },
+              new Company {
+                  Id = 3,
+                  Name = "Readers Club",
+                  StreetAddress = "777 Main St",
+                  City = "Lala land",
+                  PostalCode = "22222",
+                  State = "NY",
+                  PhoneNumber = "3331110000"
+              }
+              );
             modelBuilder.Entity<Product>().HasData(
                 new Product
                 {
